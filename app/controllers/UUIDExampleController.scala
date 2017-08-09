@@ -5,7 +5,7 @@ import javax.inject._
 
 import eu.imind.play.rest.controllers.{ResourceController, ResourceControllerComponents}
 import models.ExampleDTO
-import play.api.mvc.AbstractController
+import play.api.mvc.{AbstractController, Action, AnyContent}
 
 import scala.concurrent.ExecutionContext
 
@@ -13,12 +13,6 @@ import scala.concurrent.ExecutionContext
 class UUIDExampleController @Inject()(
   override val rcc: ResourceControllerComponents
 )(implicit ec: ExecutionContext) extends AbstractController(rcc) with ResourceController[ExampleDTO, UUID] {
-
-  val nonstandard = Action {
-    Ok("nst")
-  }
-
-  def nonstandardparam(p: String) = Action { Ok("nstp: " + p) }
 
   override def get = rcc.UNSUPPORTED
   override def post = rcc.UNSUPPORTED

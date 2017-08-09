@@ -5,9 +5,6 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-/**
-  * Created by silex on 2017.08.09..
-  */
 class NonexistingControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "the nonexisting controller" must {

@@ -5,9 +5,6 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-/**
-  * Created by silex on 2017.08.09..
-  */
 class UnsupportedExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "the unsupported controller" must {

@@ -9,11 +9,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait ResourceActionBuilder extends ActionBuilder[Request, AnyContent]
 
-object ResourceActionBuilder {
-  def apply(parser: BodyParser[AnyContent])(implicit ec: ExecutionContext):ResourceActionBuilder =
-    new ResourceActionBuilderImpl(parser)
-}
-
 class ResourceActionBuilderImpl (
     parser: BodyParser[AnyContent]
   )(implicit executionContext: ExecutionContext) extends ActionBuilderImpl(parser) with ResourceActionBuilder {

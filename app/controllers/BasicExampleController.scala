@@ -4,7 +4,7 @@ import javax.inject._
 
 import eu.imind.play.rest.controllers.{ResourceController, ResourceControllerComponents}
 import models.ExampleDTO
-import play.api.mvc.AbstractController
+import play.api.mvc.{AbstractController, Action, AnyContent}
 
 import scala.concurrent.ExecutionContext
 
@@ -17,7 +17,8 @@ class BasicExampleController @Inject()(
     Ok("nst")
   }
 
-  def nonstandardparam(p: String) = Action { Ok("nstp: " + p) }
+  def nonstandardparam(p: String): Action[AnyContent] =
+    Action { Ok("nstp: " + p) }
 
   override def get(id: Long) = Action { Ok("single-id: " + id) }
   override def get = Action { Ok("multi-get") }

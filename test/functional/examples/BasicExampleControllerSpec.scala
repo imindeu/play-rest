@@ -5,9 +5,6 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-/**
-  * Created by silex on 2017.08.08..
-  */
 class BasicExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "the example controller over API v1" must {
