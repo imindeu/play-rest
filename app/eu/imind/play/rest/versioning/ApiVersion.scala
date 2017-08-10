@@ -37,8 +37,7 @@ object ApiVersion {
       case ApiVersionRange(_, Some(highest)) if apiVersion.major < highest.major => true
       case ApiVersionRange(_, Some(highest)) if apiVersion.major == highest.major =>
         apiVersion.minor <= highest.minor
-      case x =>
-        false
+      case _ => false
     }
 
     def in(range: ApiVersionRange): Boolean =
