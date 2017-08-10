@@ -17,13 +17,11 @@ trait ResourceController[DTO, ID] {
 
   /**
     * @todo actionBuilder features
-    *       * withApiVersion
     *       * withResource (aka json(/xml/soap/etc) body - file upload should be handled)
     *       * withUser?? -- maybe silhouette
     *       * withPermission READ/WRITE - both incoming and db counterpart
     *       * with queryParameters
     *       * response should be restricted to Writeable[DTO], not to specific format eg JSON value
-    *       * add X-Clacks-Overhead
     */
 
 }

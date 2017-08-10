@@ -1,5 +1,6 @@
 package eu.imind.play.rest.headers
 
+//@todo make these configurable
 object ApiResponseHeaders {
 
   private val X_ERROR_DETAILS:String = "X-Error-Details"

@@ -1,10 +1,9 @@
 package unit
 
 import eu.imind.play.rest.versioning.ApiVersion
-import org.scalatest.Inside
 import org.scalatestplus.play.PlaySpec
 
-class ApiVersionModelSpec extends PlaySpec with Inside {
+class ApiVersionModelSpec extends PlaySpec {
 
   "The API Version model" must {
     "parse own version number to major/minor parts" in {
@@ -50,53 +49,26 @@ class ApiVersionModelSpec extends PlaySpec with Inside {
     }
 
     "be parsable from a request path" in {
-      inside(ApiVersion.fromPath("/api/v1/resource")) {
-        case version =>
-          version.major mustEqual 1
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/v1/resource").value.major mustEqual 1
+      ApiVersion.fromPath("/api/v1/resource").value.minor mustEqual 0
 
-      inside(ApiVersion.fromPath("/api/v1.2/resource")) {
-        case version =>
-          version.major mustEqual 1
-          version.minor mustEqual 2
-      }
+      ApiVersion.fromPath("/api/v1.2/resource").value.major mustEqual 1
+      ApiVersion.fromPath("/api/v1.2/resource").value.minor mustEqual 2
 
-      inside(ApiVersion.fromPath("/api/resource")) {
-        case version =>
-          version.major mustEqual 1
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/resource") mustBe empty
+      ApiVersion.fromPath("/resource") mustBe empty
 
-      inside(ApiVersion.fromPath("/resource")) {
-        case version =>
-          version.major mustEqual 1
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/v5/resource").value.major mustEqual 5
+      ApiVersion.fromPath("/api/v5/resource").value.minor mustEqual 0
 
-      inside(ApiVersion.fromPath("/v5/resource")) {
-        case version =>
-          version.major mustEqual 5
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/v5").value.major mustEqual 5
+      ApiVersion.fromPath("/api/v5").value.minor mustEqual 0
 
-      inside(ApiVersion.fromPath("/api/v5")) {
-        case version =>
-          version.major mustEqual 5
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/master/v1/resource").value.major mustEqual 1
+      ApiVersion.fromPath("/api/master/v1/resource").value.minor mustEqual 0
 
-      inside(ApiVersion.fromPath("/api/master/v1/resource")) {
-        case version =>
-          version.major mustEqual 1
-          version.minor mustEqual 0
-      }
-
-      inside(ApiVersion.fromPath("/api/master/v2/resource")) {
-        case version =>
-          version.major mustEqual 2
-          version.minor mustEqual 0
-      }
+      ApiVersion.fromPath("/api/master/v2.0/resource").value.major mustEqual 2
+      ApiVersion.fromPath("/api/master/v2.0/resource").value.minor mustEqual 0
     }
   }
 

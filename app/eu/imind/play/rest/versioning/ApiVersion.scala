@@ -46,12 +46,11 @@ object ApiVersion {
 
   }
 
-  def fromPath(path: String): ApiVersion = path.split("""/""").dropWhile(p => !(p startsWith "v")) match {
-    case parts if parts.nonEmpty =>
-      parts.headOption
-        .map(ApiVersion(_))
-        .getOrElse(ApiVersion.default)
-    case _ => ApiVersion.default
-  }
+  def fromPath(path: String): Option[ApiVersion] = path
+    .split("""/""")
+    .dropWhile(part => !(part startsWith "v"))
+    .headOption
+    .map(ApiVersion.apply)
+
 }
 
