@@ -5,7 +5,7 @@ import javax.inject._
 
 import eu.imind.play.rest.controllers.{ResourceController, ResourceControllerComponents}
 import models.ExampleDTO
-import play.api.mvc.{AbstractController, Action, AnyContent}
+import play.api.mvc.AbstractController
 
 import scala.concurrent.ExecutionContext
 

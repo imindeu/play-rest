@@ -2,16 +2,21 @@ package controllers
 
 import javax.inject._
 
+import eu.imind.play.rest.api._
 import eu.imind.play.rest.controllers.{ResourceController, ResourceControllerComponents}
 import models.ExampleDTO
+import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
-import play.api.mvc._
-import eu.imind.play.rest.api._
 
 class VersionedExampleController @Inject()(
-   override val rcc: ResourceControllerComponents
-)(implicit ec: ExecutionContext) extends AbstractController(rcc) with ResourceController[ExampleDTO, Long] {
+   override val rcc: ResourceControllerComponents,
+   override val restApiConfig:RestApiConfig
+)(implicit ec: ExecutionContext) extends AbstractController(rcc)
+  with ResourceController[ExampleDTO, Long]
+  with HasRestApiConfig {
+
+  import restApiConfig.api._
 
   override def post = Action.async { request =>
     request.apiVersion match {
