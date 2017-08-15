@@ -1,13 +1,10 @@
 package eu.imind.play.rest.request.settings
 
-import eu.imind.play.rest.parameters.pagination
-import eu.imind.play.rest.parameters.pagination.{PaginatedRequest, Pagination}
+import eu.imind.play.rest.parameters.pagination.Pagination
 import eu.imind.play.rest.parameters.pagination.Pagination._
 
-import scala.reflect.ClassTag
-import scala.reflect.runtime.universe
-import scala.reflect.runtime.universe._
 import scala.language.implicitConversions
+import scala.reflect.runtime.universe._
 
 trait SettingApplicable
 
@@ -28,7 +25,7 @@ trait PaginationSetting extends ApplicableSetting[Pagination]
 
 case class DefaultPageSize(limit: PaginationLimit) extends RequestSetting[Pagination] with PaginationSetting {
   override def apply(in: Pagination): Pagination = in match {
-    case Pagination(offset, originalLimit) if originalLimit == DEFAULT => Pagination(offset, limit)
+    case Pagination(offset, _: DEFAULT) => Pagination(offset, limit)
     case pagination => pagination
   }
 

@@ -7,14 +7,14 @@ case class Pagination(offset: Int, limit: PaginationLimit) extends SettingApplic
 
 object Pagination {
 
-  //@todo related toString?
   sealed trait PaginationLimit {
     val value:Option[Int]
   }
 
-  //@todo default should be configurabele
-  case object DEFAULT extends PaginationLimit {
-    override val value: Option[Int] = None
+  case class DEFAULT(limit: PaginationLimit) extends PaginationLimit {
+    override val value: Option[Int] = limit.value
+
+    override def toString: String = limit.toString
   }
 
   case object UNLIMITED extends PaginationLimit {

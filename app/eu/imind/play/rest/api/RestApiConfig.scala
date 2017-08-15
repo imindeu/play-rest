@@ -2,9 +2,12 @@ package eu.imind.play.rest.api
 
 import javax.inject.Inject
 
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{Config, ConfigException, ConfigFactory}
 import eu.imind.play.rest.parameters.ApiRequestSupport
-import play.api.Configuration
+import eu.imind.play.rest.parameters.pagination.Pagination
+import eu.imind.play.rest.parameters.pagination.Pagination.PaginationLimit
+
+import scala.util.Try
 
 case class ParameterNames(
     offset:String,
@@ -12,8 +15,13 @@ case class ParameterNames(
     sort:String
   )
 
+case class ParameterValues(
+    defaultLimit: PaginationLimit
+  )
+
 class RestApiConfig (
-  val parameterNames: ParameterNames
+  val parameterNames: ParameterNames,
+  val parameterValues: ParameterValues
 ) { restApiConfig =>
 
   trait API
@@ -31,9 +39,19 @@ object RestApiConfig {
 
   def conf(config: Config):RestApiConfig = new RestApiConfig(
     parameterNames = ParameterNames(
-      offset = config.getString("paramaters.offset"),
+      offset = config.getString("parameters.offset"),
       limit = config.getString("parameters.limit"),
       sort = config.getString("parameters.sort")
+    ),
+    parameterValues = ParameterValues(
+      defaultLimit = Try {
+        Pagination.DEFAULT(Pagination.Limit(config.getInt("defaults.limit")))
+      }
+      .recover {
+        case ex: ConfigException.WrongType if config.getString("defaults.limit").toLowerCase() == "unlimited" =>
+            Pagination.DEFAULT(Pagination.UNLIMITED)
+      }
+      .get
     )
   )
 
@@ -41,11 +59,20 @@ object RestApiConfig {
     conf(config.getConfig(path))
 }
 
+//@todo this could be simplified maybe? - omitted even
+class RestApiConfigImpl @Inject() (config: Config) extends RestApiConfig(
+  RestApiConfig.conf(config.getConfig("play-rest")).parameterNames,
+  RestApiConfig.conf(config.getConfig("play-rest")).parameterValues
+)
+
 //@todo this seems like a redundancy. Can we remove this?
-class DefaultRestApiConfig extends RestApiConfig(
+/*class DefaultRestApiConfig extends RestApiConfig(
   parameterNames = ParameterNames(
     offset = "offset",
     limit = "limit",
     sort = "sort"
+  ),
+  parameterValues = ParameterValues (
+    defaultLimit = Pagination.UNLIMITED
   )
-)
+)*/

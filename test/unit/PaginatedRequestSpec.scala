@@ -16,7 +16,7 @@ class PaginatedRequestSpec extends PlaySpec with Inside {
       inside(request.pagination) {
         case Pagination(offset, limit) =>
           offset mustEqual 0
-          limit mustEqual Pagination.DEFAULT
+          limit.value mustBe empty
       }
     }
 
@@ -36,7 +36,7 @@ class PaginatedRequestSpec extends PlaySpec with Inside {
       inside(request.pagination) {
         case Pagination(offset, limit) =>
           offset mustEqual 0
-          limit mustEqual Pagination.DEFAULT
+          limit.value mustBe empty
       }
     }
 
@@ -46,7 +46,7 @@ class PaginatedRequestSpec extends PlaySpec with Inside {
       inside(request.pagination) {
         case Pagination(offset, limit) =>
           offset mustEqual 30
-          limit mustEqual Pagination.DEFAULT
+          limit.value mustBe empty
       }
     }
 
@@ -56,7 +56,7 @@ class PaginatedRequestSpec extends PlaySpec with Inside {
       inside(request.pagination) {
         case Pagination(offset, limit) =>
           offset mustEqual 0
-          limit mustEqual Pagination.DEFAULT
+          limit.value mustBe empty
       }
     }
 

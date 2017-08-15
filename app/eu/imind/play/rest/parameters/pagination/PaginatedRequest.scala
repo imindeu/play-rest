@@ -18,6 +18,6 @@ trait PaginatedRequest[A] { this: Request[A] =>
     limit = getQueryString(config.parameterNames.limit)
       .filter(_.forall(_.isDigit))
       .map(l => Limit(l.toInt))
-      .getOrElse(DEFAULT)
+      .getOrElse(DEFAULT(config.parameterValues.defaultLimit))
   )
 }

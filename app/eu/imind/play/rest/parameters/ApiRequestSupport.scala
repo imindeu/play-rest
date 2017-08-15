@@ -13,8 +13,10 @@ trait ApiRequestSupport {
 
   val config:RestApiConfig
 
-  case class ParametrizedRequest[A](settings: Set[RequestSetting[SettingApplicable]], request: Request[A])(implicit val config: RestApiConfig)
-    extends WrappedRequest[A](request)
+  case class ParametrizedRequest[A](
+     settings: Set[RequestSetting[SettingApplicable]],
+     request: Request[A]
+  )(implicit val config: RestApiConfig) extends WrappedRequest[A](request)
     with RequestWithSettings[A]
     with PaginatedRequest[A]
     with VersionedRequest[A] {
@@ -29,10 +31,15 @@ trait ApiRequestSupport {
 
   object ParametrizedRequest {
     //@todo make this type parameter fancier to retain the request type (e.g. SecuredRequest of silhouette)
-    def fromRequest[A](request: Request[A]):ParametrizedRequest[A] = ParametrizedRequest[A] (
-      settings = Set(),
-      request = request
-    )(config)
+    def fromRequest[A](request: Request[A]):ParametrizedRequest[A] = request match {
+      case r:ParametrizedRequest[_] =>
+        r.asInstanceOf[ParametrizedRequest[A]]
+      case _ =>
+        ParametrizedRequest[A] (
+          settings = Set(),
+          request = request
+        )(config)
+    }
   }
 
   implicit def request2parametrized[A](request: Request[A]):ParametrizedRequest[A] = ParametrizedRequest.fromRequest(request)

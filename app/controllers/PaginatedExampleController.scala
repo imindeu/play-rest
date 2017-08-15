@@ -21,25 +21,29 @@ class PaginatedExampleController @Inject()(
 
   import restApiConfig.api._
 
-  def getV1[A](request: Request[A]):Future[Result] = Future.successful(Ok {
-    "offset: " + request.pagination.offset + " limit: " + request.pagination.limit.value
+  //@todo why this needs ParametrizedRequest???
+  private def getV1[A](request: Request[A]):Future[Result] = Future.successful(Ok {
+    "offset: " + request.pagination.offset + " limit: " + request.pagination.limit
   })
 
-  def getV1d1[A](request: ParametrizedRequest[A]):Future[Result] = {
+  private def getV1d1[A](request: Request[A]):Future[Result] = {
     Future.successful(Ok {
-      "offset: " + request.pagination.offset + " limit: " + request.pagination.limit.value
+      "offset: " + request.pagination.offset + " limit: " + request.pagination.limit
     })
   }
 
+  private def getV1d2[A](request: Request[A]):Future[Result] = Future.successful(Ok {
+    "offset: " + request.pagination.offset + " limit: " + request.pagination.limit
+  })
+
   override def get = Action.async { request =>
     request.apiVersion match {
+      case v if v >= "v1.2" => getV1d2(request)
       //scalastyle:off magic.number
       case v if v >= "v1.1" => getV1d1(request.withSettings(DefaultPageSize(30)))
       //scalastyle:on magic.number
       case _ =>
         getV1(request.withSettings(DefaultPageSize(UNLIMITED)))
-        //@todo the following only works because of system default - should do a proper example
-        //getV1(request)
     }
   }
 
