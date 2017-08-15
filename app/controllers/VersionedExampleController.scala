@@ -20,13 +20,14 @@ class VersionedExampleController @Inject()(
 
   override def post = Action.async { request =>
     request.apiVersion match {
-      //@todo make the following examples work and testable
-      //case v if v <= "v0.0" =>
-      //case v if v in "v2.0" -> "v3.0" =>
-      case v if v >= "v1.1" =>
-        Future.successful(Ok("above"))
+      case v if v in "v2.0" -> "v3.0" =>
+        Future.successful(Ok("between 2.0 and 3.0"))
+      case v if v >= "v1.2" =>
+        Future.successful(Ok("1.2 or higher"))
+      case v if v <= "v1.1" =>
+        Future.successful(Ok("1.1 or lower"))
       case _ =>
-        Future.successful(Ok("below"))
+        Future.successful(Ok("rest"))
     }
   }
 

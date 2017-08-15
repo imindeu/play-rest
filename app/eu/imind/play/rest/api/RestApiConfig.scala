@@ -64,15 +64,3 @@ class RestApiConfigImpl @Inject() (config: Config) extends RestApiConfig(
   RestApiConfig.conf(config.getConfig("play-rest")).parameterNames,
   RestApiConfig.conf(config.getConfig("play-rest")).parameterValues
 )
-
-//@todo this seems like a redundancy. Can we remove this?
-/*class DefaultRestApiConfig extends RestApiConfig(
-  parameterNames = ParameterNames(
-    offset = "offset",
-    limit = "limit",
-    sort = "sort"
-  ),
-  parameterValues = ParameterValues (
-    defaultLimit = Pagination.UNLIMITED
-  )
-)*/

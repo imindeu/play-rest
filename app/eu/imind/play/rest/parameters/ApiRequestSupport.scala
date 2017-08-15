@@ -21,7 +21,6 @@ trait ApiRequestSupport {
     with PaginatedRequest[A]
     with VersionedRequest[A] {
 
-    //@todo can we move this to RequestWithSettings? would be appropriate
     def withSettings(settings: RequestSetting[SettingApplicable]*):ParametrizedRequest[A] = ParametrizedRequest[A](
       settings = this.settings ++ settings,
       request = this.request

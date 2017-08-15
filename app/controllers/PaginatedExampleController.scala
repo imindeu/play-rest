@@ -21,7 +21,6 @@ class PaginatedExampleController @Inject()(
 
   import restApiConfig.api._
 
-  //@todo why this needs ParametrizedRequest???
   private def getV1[A](request: Request[A]):Future[Result] = Future.successful(Ok {
     "offset: " + request.pagination.offset + " limit: " + request.pagination.limit
   })
