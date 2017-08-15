@@ -13,7 +13,8 @@ class V1Router @Inject() (
    unsupportedExampleController: UnsupportedExampleController,
    uuidExampleController: UUIDExampleController,
    versionedExampleController: VersionedExampleController,
-   paginatedExampleController: PaginatedExampleController
+   paginatedExampleController: PaginatedExampleController,
+   silhouetteExampleController: SilhouetteExampleController
  )(implicit val rcc: ResourceControllerComponents) extends VersionedRouter {
 
   override val versionTag = "v1.0"
@@ -29,7 +30,8 @@ class V1Router @Inject() (
     new ResourceRouter(unsupportedExampleController).withPrefix("/unsupported").routes orElse
     new ResourceRouter(uuidExampleController).withPrefix("/uuid").routes orElse
     new ResourceRouter(versionedExampleController).withPrefix("/versioned").routes orElse
-    new ResourceRouter(paginatedExampleController).withPrefix("/paginated").routes
+    new ResourceRouter(paginatedExampleController).withPrefix("/paginated").routes orElse
+    new ResourceRouter(silhouetteExampleController).withPrefix("/silhouette").routes
 
   override def removes = NOTHING
 

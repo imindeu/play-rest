@@ -13,13 +13,14 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 libraryDependencies ++= Seq(
   guice,
   jdbc,
-  "com.mohiva" %% "play-silhouette" % "5.0.0-RC2",
+  "net.codingwell" %% "scala-guice" % "4.1.0",
+  "com.mohiva" %% "play-silhouette" % "5.0.0",
   "com.typesafe.play" %% "play-slick" % "3.0.0",
   "com.typesafe.play" % "play-json_2.12" % "2.6.2",
 
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test,
   "com.h2database" % "h2" % "1.4.193" % Test,
-  "com.mohiva" %% "play-silhouette-testkit" % "5.0.0-RC2" % Test
+  "com.mohiva" %% "play-silhouette-testkit" % "5.0.0" % Test
 )
 
 resolvers += Resolver.jcenterRepo //silhouette needs this
