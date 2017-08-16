@@ -1,5 +1,6 @@
 package functional.examples
 
+import helpers.IDGenerator
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
@@ -98,5 +99,36 @@ class PaginatedExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
       status(result) mustEqual OK
       contentAsString(result) mustEqual "offset: 10 limit: Limit(20)"
     }
+
+    "not support single-item GET" in {
+      val result = route(app, FakeRequest(GET, "/api/v1/paginated/" + IDGenerator.randomLong())).get
+
+      status(result) mustEqual METHOD_NOT_ALLOWED
+    }
+
+    "not support PATCH" in {
+      val result = route(app, FakeRequest(PATCH, "/api/v1/paginated/" + IDGenerator.randomLong())).get
+
+      status(result) mustEqual METHOD_NOT_ALLOWED
+    }
+
+    "not support DELETE" in {
+      val result = route(app, FakeRequest(DELETE, "/api/v1/paginated/" + IDGenerator.randomLong())).get
+
+      status(result) mustEqual METHOD_NOT_ALLOWED
+    }
+
+    "not support PUT" in {
+      val result = route(app, FakeRequest(PUT, "/api/v1/paginated/" + IDGenerator.randomLong())).get
+
+      status(result) mustEqual METHOD_NOT_ALLOWED
+    }
+
+    "not support POST" in {
+      val result = route(app, FakeRequest(POST, "/api/v1/paginated")).get
+
+      status(result) mustEqual METHOD_NOT_ALLOWED
+    }
+
   }
 }

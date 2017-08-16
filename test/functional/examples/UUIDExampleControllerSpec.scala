@@ -1,7 +1,6 @@
 package functional.examples
 
-import java.util.UUID
-
+import helpers.IDGenerator
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
@@ -26,7 +25,7 @@ class UUIDExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
 
     "handle single-item GET" in {
-      val uuid = UUID.randomUUID()
+      val uuid = IDGenerator.randomUUID()
 
       val result = route(app, FakeRequest(GET, "/api/v1/uuid/" + uuid)).get
 
@@ -35,7 +34,7 @@ class UUIDExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
 
     "handle PATCH" in {
-      val uuid = UUID.randomUUID()
+      val uuid = IDGenerator.randomUUID()
 
       val result = route(app, FakeRequest(PATCH, "/api/v1/uuid/" + uuid)).get
 
@@ -44,7 +43,7 @@ class UUIDExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
 
     "handle DELETE" in {
-      val uuid = UUID.randomUUID()
+      val uuid = IDGenerator.randomUUID()
 
       val result = route(app, FakeRequest(DELETE, "/api/v1/uuid/" + uuid)).get
 
@@ -53,7 +52,7 @@ class UUIDExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
 
     "handle PUT" in {
-      val uuid = UUID.randomUUID()
+      val uuid = IDGenerator.randomUUID()
 
       val result = route(app, FakeRequest(PUT, "/api/v1/uuid/" + uuid)).get
 

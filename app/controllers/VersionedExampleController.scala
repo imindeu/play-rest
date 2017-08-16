@@ -26,8 +26,6 @@ class VersionedExampleController @Inject()(
         Future.successful(Ok("1.2 or higher"))
       case v if v <= "v1.1" =>
         Future.successful(Ok("1.1 or lower"))
-      case _ =>
-        Future.successful(Ok("rest"))
     }
   }
 

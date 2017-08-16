@@ -10,6 +10,7 @@ import org.scalatestplus.play.{BaseOneAppPerSuite, FakeApplicationFactory}
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import silhouette.DummyEnv
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 trait SilhouetteApplicationFactory extends FakeApplicationFactory {
