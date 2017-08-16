@@ -22,7 +22,7 @@ class SilhouetteExampleController @Inject()(
 
   import restApiConfig.api._
 
-  //@todo this would be the best looks
+  //@todo this would be the best looks - silhouette composition helper is needed
   /*override def get = silhouette.SecuredAction.async { implicit request =>
     Future.successful {
       val user = request.authenticator.loginInfo.providerKey

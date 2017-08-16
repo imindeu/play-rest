@@ -9,13 +9,7 @@ import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
-case class ResourceControllerComponents @Inject() (
-  actionBuilder: ResourceActionBuilder,
-  parsers: PlayBodyParsers,
-  messagesApi: MessagesApi,
-  langs: Langs,
-  fileMimeTypes: FileMimeTypes,
-  executionContext: ExecutionContext) extends ControllerComponents {
+trait ResourceControllerHelperMethods { this: ControllerComponents =>
 
   val UNSUPPORTED: Action[AnyContent] = actionBuilder {
     Results.MethodNotAllowed
@@ -26,3 +20,11 @@ case class ResourceControllerComponents @Inject() (
   }
 
 }
+
+case class ResourceControllerComponents @Inject() (
+  actionBuilder: ResourceActionBuilder,
+  parsers: PlayBodyParsers,
+  messagesApi: MessagesApi,
+  langs: Langs,
+  fileMimeTypes: FileMimeTypes,
+  executionContext: ExecutionContext) extends ControllerComponents with ResourceControllerHelperMethods
