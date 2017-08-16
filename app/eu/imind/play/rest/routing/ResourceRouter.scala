@@ -34,7 +34,7 @@ class ResourceRouter[DTO, ID](
     case GET(p"/") => controller.get
     case GET(p"/${extractor(id)}") => controller.get(id)
     case DELETE(p"/${extractor(id)}") => controller.delete(id)
-    //@todo handle OPTIONS verb
+    //@todo handle OPTIONS verb (maybe CORS filter does it, should make sure
     case _ => rcc.UNSUPPORTED
   }
 

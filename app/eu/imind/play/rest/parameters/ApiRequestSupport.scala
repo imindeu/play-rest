@@ -29,7 +29,6 @@ trait ApiRequestSupport {
   }
 
   object ParametrizedRequest {
-    //@todo make this type parameter fancier to retain the request type (e.g. SecuredRequest of silhouette)
     def fromRequest[A](request: Request[A]):ParametrizedRequest[A] = request match {
       case r:ParametrizedRequest[_] =>
         r.asInstanceOf[ParametrizedRequest[A]]
