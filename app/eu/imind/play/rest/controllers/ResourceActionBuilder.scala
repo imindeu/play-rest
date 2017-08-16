@@ -16,7 +16,8 @@ class ResourceActionBuilderImpl (
   @Inject
   def this(parser: BodyParsers.Default)(implicit ec: ExecutionContext) = this(parser: BodyParser[AnyContent])
 
-  override def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]):Future[Result] =
+  override def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]):Future[Result] = {
     block(request).map(_.withHeaders(ApiResponseHeaders.CLACKS_OVERHEAD))
+  }
 
 }

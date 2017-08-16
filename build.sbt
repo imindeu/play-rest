@@ -27,6 +27,6 @@ resolvers += Resolver.jcenterRepo //silhouette needs this
 
 (scalastyleConfig in Test) := baseDirectory.value / "scalastyle-test-config.xml"
 
-coverageExcludedPackages := "controllers.Reverse.*;controllers.javascript;router;"
+coverageExcludedPackages := "controllers.Reverse.*;controllers.javascript;router;models.UserIdentityService;silhouette.*"
 coverageMinimum := 80
 coverageFailOnMinimum := true

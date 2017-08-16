@@ -1,8 +1,10 @@
 # Routes
 
 ->             /api/v3.0        routers.V3Router
+->             /api/v3          routers.V3Router
 ->             /api/v2.5        routers.V2d5Router
 ->             /api/v2.0        routers.V2Router
+->             /api/v2          routers.V2Router
 ->             /api/v1.2        routers.V1d2Router
 ->             /api/v1.1        routers.V1d1Router
 ->             /api/v1.0        routers.V1Router
