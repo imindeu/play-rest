@@ -9,26 +9,26 @@ case class Pagination(offset: Int, limit: PaginationLimit) extends SettingApplic
 object Pagination {
 
   sealed trait PaginationLimit {
-    val value:Option[Int]
+    val value:Option[Long]
   }
 
   object PaginationLimit {
     implicit def intIsPagintaionLimit(l: Int):PaginationLimit = Limit(l)
-    implicit def longIsPagintaionLimit(l: Long):PaginationLimit = Limit(l.toInt)
+    implicit def longIsPagintaionLimit(l: Long):PaginationLimit = Limit(l)
   }
 
   case class DEFAULT(limit: PaginationLimit) extends PaginationLimit {
-    override val value: Option[Int] = limit.value
+    override val value: Option[Long] = limit.value
 
     override def toString: String = limit.toString
   }
 
   case object UNLIMITED extends PaginationLimit {
-    override val value: Option[Int] = None
+    override val value: Option[Long] = None
   }
 
-  case class Limit(l: Int) extends PaginationLimit {
-    override val value: Option[Int] = Some(l)
+  case class Limit(l: Long) extends PaginationLimit {
+    override val value: Option[Long] = Some(l)
   }
 
 }

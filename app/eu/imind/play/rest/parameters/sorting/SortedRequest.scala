@@ -18,6 +18,7 @@ trait SortedRequest[A] { this: Request[A] =>
   def sorting:Sorting =
     getQueryString(config.parameterNames.sort).map(
       _.split(config.parameterSettings.sortDelimitier)
+      .filter(_.nonEmpty)
       .map(_.parseSort)
     )
     .map(Sorting(_))

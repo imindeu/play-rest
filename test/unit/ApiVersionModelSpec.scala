@@ -21,6 +21,12 @@ class ApiVersionModelSpec extends PlaySpec {
       v0.minor mustEqual 0
     }
 
+    "be convertible to version string" in {
+      ApiVersion("v1.0").toString mustEqual "v1.0"
+      ApiVersion("v1.1").toString mustEqual "v1.1"
+      ApiVersion("v1").toString mustEqual "v1.0"
+    }
+
     "produce empty version" in {
       ApiVersion.default.major mustEqual 1
       ApiVersion.default.minor mustEqual 0
@@ -28,6 +34,7 @@ class ApiVersionModelSpec extends PlaySpec {
 
     "compare properly to compatibility ranges" in {
       val v12 = ApiVersion("v1.2")
+      val v2 = ApiVersion("v2.0")
 
       (v12 <= "v1.13") mustEqual true
       (v12 >= "v1.13") mustEqual false
@@ -46,6 +53,24 @@ class ApiVersionModelSpec extends PlaySpec {
       v12 in ("v1.1" -> "v1.2") mustEqual true
       v12 in ("v1.0" -> "v1.1") mustEqual false
       v12 in ("v1.3" -> "v3.3") mustEqual false
+
+      (v2 >= "v1") mustEqual true
+      (v2 >= "v1.1") mustEqual true
+      (v2 >= "v1.1") mustEqual true
+      (v2 >= "v2") mustEqual true
+      (v2 >= "v2.0") mustEqual true
+      (v2 >= "v2.1") mustEqual false
+      (v2 >= "v3") mustEqual false
+      (v2 >= "v3.1") mustEqual false
+
+      (v2 <= "v1") mustEqual false
+      (v2 <= "v1.1") mustEqual false
+      (v2 <= "v1.1") mustEqual false
+      (v2 <= "v2") mustEqual true
+      (v2 <= "v2.0") mustEqual true
+      (v2 <= "v2.1") mustEqual true
+      (v2 <= "v3") mustEqual true
+      (v2 <= "v3.1") mustEqual true
     }
 
     "be parsable from a request path" in {

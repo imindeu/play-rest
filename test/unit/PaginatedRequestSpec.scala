@@ -8,7 +8,7 @@ import play.api.test.Helpers._
 
 class PaginatedRequestSpec extends PlaySpec with Inside {
 
-  "The pagination request extension" must {
+  "the pagination request extension" must {
 
     "extract pagination info when nothing is present" in {
       val request = FakePaginatedRequest(GET, "/api/resource")

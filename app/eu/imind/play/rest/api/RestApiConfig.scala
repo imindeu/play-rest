@@ -5,7 +5,8 @@ import javax.inject.Inject
 import com.typesafe.config.{Config, ConfigException, ConfigFactory}
 import eu.imind.play.rest.parameters.ApiRequestSupport
 import eu.imind.play.rest.parameters.pagination.Pagination
-import eu.imind.play.rest.parameters.pagination.Pagination.PaginationLimit
+import eu.imind.play.rest.parameters.pagination.Pagination.{PaginationLimit, UNLIMITED}
+import eu.imind.play.rest.parameters.sorting.SortFieldBuilderImplicits
 
 import scala.util.Try
 
@@ -30,7 +31,8 @@ class RestApiConfig (
 ) { restApiConfig =>
 
   trait API
-    extends ApiRequestSupport {
+    extends ApiRequestSupport
+    with SortFieldBuilderImplicits {
 
     override implicit val config: RestApiConfig = restApiConfig
 
