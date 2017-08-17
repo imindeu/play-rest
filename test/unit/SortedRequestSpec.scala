@@ -6,6 +6,7 @@ import org.scalatest.Inside
 import org.scalatestplus.play.PlaySpec
 import play.api.test.Helpers._
 
+//@todo make sure that the + - urlencoding relation is proper here
 class SortedRequestSpec extends PlaySpec with Inside {
 
   "the sorted request extension" must {

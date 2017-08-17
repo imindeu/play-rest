@@ -6,6 +6,11 @@ import scala.language.implicitConversions
 case class Sorting(sortFields: Seq[SortField]) extends SettingApplicable {
 
   def :+(sortField: SortField):Sorting = this.copy(sortFields = sortFields :+ sortField)
+
+  override def toString: String = sortFields match {
+    case sf if sf.isEmpty => "empty sorting"
+    case sf => sf.map(_.toString).mkString(", ")
+  }
 }
 
 object Sorting {

@@ -2,7 +2,10 @@ package eu.imind.play.rest.parameters.sorting
 
 import scala.language.implicitConversions
 
-case class SortField(field: String, direction: SortDirection)
+case class SortField(field: String, direction: SortDirection) {
+
+  override def toString = direction.toString + field
+}
 
 object SortField {
 
