@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import eu.imind.play.rest.api.{HasRestApiConfig, RestApiConfig}
 import eu.imind.play.rest.controllers.{ResourceController, ResourceControllerComponents}
-import eu.imind.play.rest.request.settings.DefaultSorting
+import eu.imind.play.rest.request.settings.{CaseInsensitiveSorting, DefaultSorting}
 import models.ExampleDTO
 import play.api.mvc.{AbstractController, Request, Result}
 
@@ -28,8 +28,13 @@ class SortedExampleController @Inject()(
     "sorting: " + request.sorting
   })
 
+  private def getV1d2[A](request: Request[A]):Future[Result] = Future.successful(Ok {
+    "sorting: " + request.sorting
+  })
+
   override def get = Action.async { request =>
     request.apiVersion match {
+      case v if v >= "v1.2" => getV1d2(request.withSettings(CaseInsensitiveSorting))
       case v if v >= "v1.1" => getV1d1(request.withSettings(DefaultSorting("b".desc :+ "a".asc)))
       case _ => getV1(request)
     }

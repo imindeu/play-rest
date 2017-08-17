@@ -89,6 +89,48 @@ class SortedExampleControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
       contentAsString(result) mustEqual "sorting: +c"
     }
 
+    "handle lowercase sort param when case sensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.1/sorted?sort=eee")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +eee"
+    }
+
+    "handle uppercase sort param when case sensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.1/sorted?sort=EEE")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +EEE"
+    }
+
+    "handle mixedcase sort param when case sensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.1/sorted?sort=Eee")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +Eee"
+    }
+
+    "handle lowercase sort param when case insensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.2/sorted?sort=eee")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +eee"
+    }
+
+    "handle uppercase sort param when case insensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.2/sorted?sort=EEE")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +eee"
+    }
+
+    "handle mixedcase sort param when case insensitive" in {
+      val result = route(app, FakeRequest(GET, "/api/v1.2/sorted?sort=Eee")).get
+
+      status(result) mustEqual OK
+      contentAsString(result) mustEqual "sorting: +eee"
+    }
+
     "not support single-item GET" in {
       val result = route(app, FakeRequest(GET, "/api/v1/sorted/" + IDGenerator.randomLong())).get
 

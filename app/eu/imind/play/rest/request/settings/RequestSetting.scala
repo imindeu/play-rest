@@ -40,3 +40,9 @@ case class DefaultSorting(sorting: Sorting) extends RequestSetting[Sorting] with
   }
 }
 
+//@todo make this setting available as a global configuration
+case object CaseInsensitiveSorting extends RequestSetting[Sorting] with SortingSetting {
+  override def apply(in: Sorting): Sorting =
+    in.copy(sortFields = in.sortFields.map(sf => sf.copy(field = sf.field.toLowerCase)))
+}
+
