@@ -3,6 +3,7 @@ package eu.imind.play.rest.parameters
 import eu.imind.play.rest.api.RestApiConfig
 import eu.imind.play.rest.parameters.pagination.PaginatedRequest
 import eu.imind.play.rest.parameters.pagination.Pagination.{Limit, PaginationLimit}
+import eu.imind.play.rest.parameters.sorting.SortedRequest
 import eu.imind.play.rest.request.settings.{RequestSetting, RequestWithSettings, SettingApplicable}
 import eu.imind.play.rest.versioning.VersionedRequest
 import play.api.mvc.{Request, WrappedRequest}
@@ -19,6 +20,7 @@ trait ApiRequestSupport {
   )(implicit val config: RestApiConfig) extends WrappedRequest[A](request)
     with RequestWithSettings[A]
     with PaginatedRequest[A]
+    with SortedRequest[A]
     with VersionedRequest[A] {
 
     def withSettings(settings: RequestSetting[SettingApplicable]*):ParametrizedRequest[A] = ParametrizedRequest[A](
@@ -41,7 +43,5 @@ trait ApiRequestSupport {
   }
 
   implicit def request2parametrized[A](request: Request[A]):ParametrizedRequest[A] = ParametrizedRequest.fromRequest(request)
-
-  implicit def int2pagintaionLimit(l: Int):PaginationLimit = Limit(l)
 
 }

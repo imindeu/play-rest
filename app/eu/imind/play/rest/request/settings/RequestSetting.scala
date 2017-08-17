@@ -2,6 +2,7 @@ package eu.imind.play.rest.request.settings
 
 import eu.imind.play.rest.parameters.pagination.Pagination
 import eu.imind.play.rest.parameters.pagination.Pagination._
+import eu.imind.play.rest.parameters.sorting.Sorting
 
 import scala.language.implicitConversions
 import scala.reflect.runtime.universe._
@@ -22,6 +23,7 @@ sealed trait ApplicableSetting[A] {
 }
 
 trait PaginationSetting extends ApplicableSetting[Pagination]
+trait SortingSetting extends ApplicableSetting[Sorting]
 
 case class DefaultPageSize(limit: PaginationLimit) extends RequestSetting[Pagination] with PaginationSetting {
   override def apply(in: Pagination): Pagination = in match {
@@ -30,3 +32,11 @@ case class DefaultPageSize(limit: PaginationLimit) extends RequestSetting[Pagina
   }
 
 }
+
+case class DefaultSorting(sorting: Sorting) extends RequestSetting[Sorting] with SortingSetting {
+  override def apply(in: Sorting): Sorting = in match {
+    case Sorting(fields) if fields.isEmpty => sorting
+    case original => original
+  }
+}
+

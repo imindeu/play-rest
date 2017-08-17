@@ -19,9 +19,14 @@ case class ParameterValues(
     defaultLimit: PaginationLimit
   )
 
+case class ParameterSettings(
+    sortDelimitier: String
+  )
+
 class RestApiConfig (
   val parameterNames: ParameterNames,
-  val parameterValues: ParameterValues
+  val parameterValues: ParameterValues,
+  val parameterSettings: ParameterSettings
 ) { restApiConfig =>
 
   trait API
@@ -52,6 +57,9 @@ object RestApiConfig {
             Pagination.DEFAULT(Pagination.UNLIMITED)
       }
       .get
+    ),
+    parameterSettings = ParameterSettings(
+      sortDelimitier = config.getString("settings.sort-delimiter")
     )
   )
 
@@ -62,5 +70,6 @@ object RestApiConfig {
 //@todo this could be simplified maybe? - omitted even
 class RestApiConfigImpl @Inject() (config: Config) extends RestApiConfig(
   RestApiConfig.conf(config.getConfig("play-rest")).parameterNames,
-  RestApiConfig.conf(config.getConfig("play-rest")).parameterValues
+  RestApiConfig.conf(config.getConfig("play-rest")).parameterValues,
+  RestApiConfig.conf(config.getConfig("play-rest")).parameterSettings
 )
